@@ -20,12 +20,12 @@ public class AccountService {
         this.accountRepo.save(account);
     }
 
-    public void delete(Account knikker) {
-        this.accountRepo.delete(knikker);
+    public void delete(Account account) {
+        this.accountRepo.delete(account);
     }
 
-    public void update(Account knikker) {
-        this.accountRepo.save(knikker);
+    public void update(Account account) {
+        this.accountRepo.save(account);
     }
 
     public Optional<Account> getById(Long id) {
