@@ -9,5 +9,5 @@ public class Inventory implements IInventory{
     @Getter @Setter
     private Long id;
     @Getter
-    private ArrayList<Object> inventory;
+    private ArrayList<Item> inventory;
 }

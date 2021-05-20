@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,4 +30,9 @@ public class Account implements IAccount {
     @Getter @Setter
     @Column(name="role")
     private String role;
+
+    public com.example.HuishoudelijkVoorraadTrackerSpring.domain.Account convertToDomain(){
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(this, com.example.HuishoudelijkVoorraadTrackerSpring.domain.Account.class);
+    }
 }

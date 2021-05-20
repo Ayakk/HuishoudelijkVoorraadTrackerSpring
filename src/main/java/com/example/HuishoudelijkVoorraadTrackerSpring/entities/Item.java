@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 
@@ -26,7 +27,11 @@ public class Item implements IItem {
     @Getter @Setter
     @Column(name="price")
     private double price;
-    @Getter @Setter
-    @Column(name="quantity")
-    private int quantity;
+    @ManyToOne
+    private Inventory ListInventory;
+
+    public com.example.HuishoudelijkVoorraadTrackerSpring.domain.Item convertToDomain(){
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(this, com.example.HuishoudelijkVoorraadTrackerSpring.domain.Item.class);
+    }
 }

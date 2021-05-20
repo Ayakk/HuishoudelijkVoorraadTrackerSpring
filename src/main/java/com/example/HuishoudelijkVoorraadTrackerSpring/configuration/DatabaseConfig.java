@@ -24,7 +24,6 @@ public class DatabaseConfig
             if (user == null){
                 System.out.println("speler bestaat niet,de speler wordt aangemaakt");
                 Account newAccount = new Account();
-                newAccount.setId(1L);
                 newAccount.setUsername("username1");
                 newAccount.setPassword("pwd");
                 newAccount.setRole("admin");
@@ -32,33 +31,49 @@ public class DatabaseConfig
                 accountRepo.save(newAccount);
             }
 
-            // hier wordt een nieuwe inventory aangemaakt als die nog niet bestaat
-            var inventory = inventoryRepo.findById(1L).orElse(null);
-
-            if (inventory == null){
-                System.out.println("inventory bestaat niet,de inventory wordt aangemaakt");
-                Inventory newInventory = new Inventory();
-                Item i = new Item();
-                newInventory.setId(1L);
-                newInventory.getInventory().add(i);
-                inventoryRepo.save(newInventory);
-            }
+//            // hier wordt een nieuwe inventory aangemaakt als die nog niet bestaat
+//            var inventory = inventoryRepo.findById(1L).orElse(null);
+//
+//            if (inventory == null){
+//                System.out.println("inventory bestaat niet,de inventory wordt aangemaakt");
+//                Inventory newInventory = new Inventory();
+//                Item i = new Item();
+//                newInventory.getInventoryList().add(i);
+//                inventoryRepo.save(newInventory);
+//            }
 
 
 
             // hier wordt een nieuwe item aangemaakt als die nog niet bestaat
-            var item = itemRepo.findById(1L).orElse(null);
+            var Appel = itemRepo.findByName("Appel").orElse(null);
+            var Melk = itemRepo.findByName("Melk").orElse(null);
+            var Banaan = itemRepo.findByName("Banaan").orElse(null);
 
-            if (item == null){
-                System.out.println("item bestaat niet,de item wordt aangemaakt");
+            if (Appel == null){
+                System.out.println("Appel bestaat niet,de item wordt aangemaakt");
                 Item newItem = new Item();
-                newItem.setId(1L);
-                newItem.setDescription("Test Description");
-                newItem.setName("Test Name");
-                newItem.setPrice(10);
-                newItem.setQuantity(5);
+                newItem.setDescription("Lekker appeltje");
+                newItem.setName("Appel");
+                newItem.setPrice(1);
                 itemRepo.save(newItem);
             }
+            if(Melk == null){
+                System.out.println("Melk bestaat niet,de item wordt aangemaakt");
+                Item newItem = new Item();
+                newItem.setDescription("Pak melk");
+                newItem.setName("Melk");
+                newItem.setPrice(1.99);
+                itemRepo.save(newItem);
+            }
+            if(Banaan == null){
+                System.out.println("Banaan bestaat niet,de item wordt aangemaakt");
+                Item newItem = new Item();
+                newItem.setDescription("Tros banaantjes");
+                newItem.setName("Banaan");
+                newItem.setPrice(4.99);
+                itemRepo.save(newItem);
+            }
+
         };
     }
 }
