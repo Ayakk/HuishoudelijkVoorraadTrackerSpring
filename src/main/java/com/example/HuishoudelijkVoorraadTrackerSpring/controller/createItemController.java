@@ -12,10 +12,30 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@RequestMapping("/updateItem")
-public class updateItemController {
+@RequestMapping("/createItem")
+public class createItemController {
     @Autowired
     ItemService itemService;
+
+    @PostMapping()
+    public String createItem(Item item) {
+        String nameReplace = item.getName();
+        String descriptionReplace = item.getDescription();
+        double priceReplace = item.getPrice();
+
+        nameReplace.replace(",", "");
+        descriptionReplace.replace(",", "");
+
+        item.setName(nameReplace);
+        item.setDescription(descriptionReplace);
+        item.setPrice(priceReplace);
+
+        System.out.println("ItemPage itemName: " + item.getName());
+        System.out.println("ItemPage itemDscp: " + item.getDescription());
+        System.out.println("ItemPage itemPrice: " + item.getPrice());
+        itemService.save(item);
+        return "register_success";
+    }
 
     @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
     public String itemGet() {
@@ -24,15 +44,12 @@ public class updateItemController {
                 "<script src=\"\"></script>\n" +
                 "</head>\n" +
                 "<header>" +
-                "<title>Update Item</title>" +
+                "<title>Create Item</title>" +
                 "</header>\n" +
                 "<body>\n" +
-                "<h1>Update item</h1>\n"+
-                "<form id=\"updateItemForm\" method=\"post\">\n" +
-                "    <label for=\"id\">Welke item(Geef ID):</label><br>" +
-                "    <input id=\"id\" placeholder=\"00\" name=\"id\" type=\"number\"><br>\n" +
-
-                "    <label for=\"name\">name:</label><br>" +
+                "<h1>Create new item</h1>\n"+
+                "<form id=\"createItemForm\" method=\"post\">\n" +
+                "    <label for=\"name\">Name:</label><br>" +
                 "    <input id=\"name\" placeholder=\"Komkommer\" name=\"name\" type=\"text\"><br>\n" +
 
                 "    <label for=\"description\">description:</label><br>\n" +
@@ -47,20 +64,6 @@ public class updateItemController {
                 getItems()+
                 "</body>\n" +
                 "</html>";
-    }
-
-    @PostMapping()
-    public String editItem(Item newItem) {
-        System.out.println("ID:" + newItem.getId());
-        for(Item oldItem : itemService.getAll()){
-            if(oldItem.getId().equals(newItem.getId())){
-                oldItem.setName(newItem.getName());
-                oldItem.setDescription(newItem.getDescription());
-                oldItem.setPrice(newItem.getPrice());
-                itemService.update(oldItem);
-            }
-        }
-        return "register_success";
     }
 
     public List<String> getItems(){

@@ -12,8 +12,8 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@RequestMapping("/updateItem")
-public class updateItemController {
+@RequestMapping("/deleteItem")
+public class deleteItemController {
     @Autowired
     ItemService itemService;
 
@@ -24,23 +24,13 @@ public class updateItemController {
                 "<script src=\"\"></script>\n" +
                 "</head>\n" +
                 "<header>" +
-                "<title>Update Item</title>" +
+                "<title>Delete Item</title>" +
                 "</header>\n" +
                 "<body>\n" +
-                "<h1>Update item</h1>\n"+
-                "<form id=\"updateItemForm\" method=\"post\">\n" +
+                "<h1>Delete item</h1>\n"+
+                "<form id=\"deleteItemForm\" method=\"post\">\n" +
                 "    <label for=\"id\">Welke item(Geef ID):</label><br>" +
                 "    <input id=\"id\" placeholder=\"00\" name=\"id\" type=\"number\"><br>\n" +
-
-                "    <label for=\"name\">name:</label><br>" +
-                "    <input id=\"name\" placeholder=\"Komkommer\" name=\"name\" type=\"text\"><br>\n" +
-
-                "    <label for=\"description\">description:</label><br>\n" +
-                "    <input id=\"description\" placeholder=\"Heel gezond\" name=\"description\" type=\"text\">\n" +
-
-                "    <label for=\"price\">price:</label><br>\n" +
-                "    <input id=\"price\" placeholder=\"10.00\" name=\"price\" type=\"number\">\n" +
-
                 "    <input type=\"submit\" id=\"submitButton\" value=\"Submit\">\n" +
                 "</form>\n" +
                 "<h1>All items</h1>\n"+
@@ -50,14 +40,11 @@ public class updateItemController {
     }
 
     @PostMapping()
-    public String editItem(Item newItem) {
+    public String deleteitem(Item newItem) {
         System.out.println("ID:" + newItem.getId());
         for(Item oldItem : itemService.getAll()){
             if(oldItem.getId().equals(newItem.getId())){
-                oldItem.setName(newItem.getName());
-                oldItem.setDescription(newItem.getDescription());
-                oldItem.setPrice(newItem.getPrice());
-                itemService.update(oldItem);
+                itemService.delete(oldItem);
             }
         }
         return "register_success";
