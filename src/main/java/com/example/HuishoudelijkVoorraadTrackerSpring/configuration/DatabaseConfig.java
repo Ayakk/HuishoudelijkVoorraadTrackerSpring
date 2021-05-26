@@ -55,6 +55,7 @@ public class DatabaseConfig
                 newItem.setDescription("Lekker appeltje");
                 newItem.setName("Appel");
                 newItem.setPrice(1);
+                newItem.setQuantity(1);
                 itemRepo.save(newItem);
             }
             if(Melk == null){
@@ -63,6 +64,7 @@ public class DatabaseConfig
                 newItem.setDescription("Pak melk");
                 newItem.setName("Melk");
                 newItem.setPrice(1.99);
+                newItem.setQuantity(1);
                 itemRepo.save(newItem);
             }
             if(Banaan == null){
@@ -71,6 +73,7 @@ public class DatabaseConfig
                 newItem.setDescription("Tros banaantjes");
                 newItem.setName("Banaan");
                 newItem.setPrice(4.99);
+                newItem.setQuantity(1);
                 itemRepo.save(newItem);
             }
 

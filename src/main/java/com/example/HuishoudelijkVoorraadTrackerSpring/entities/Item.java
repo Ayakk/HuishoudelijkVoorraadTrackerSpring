@@ -27,6 +27,8 @@ public class Item implements IItem {
     @Getter @Setter
     @Column(name="price")
     private double price;
+    @Getter @Setter
+    private int quantity;
     @ManyToOne
     private Inventory ListInventory;
 

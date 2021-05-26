@@ -12,4 +12,6 @@ public class Item implements IItem{
     private String description;
     @Getter @Setter
     private double price;
+    @Getter @Setter
+    private int quantity;
 }
