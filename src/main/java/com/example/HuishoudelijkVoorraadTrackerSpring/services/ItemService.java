@@ -32,6 +32,10 @@ public class ItemService {
         return itemRepo.findById(id);
     }
 
+    public Optional<Item> getByName(String name) {
+        return itemRepo.findByName(name);
+    }
+
     public List<Item> getAll() {
         return itemRepo.findAll();
     }
