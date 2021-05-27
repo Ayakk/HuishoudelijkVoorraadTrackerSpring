@@ -47,7 +47,7 @@ public class createItemController {
                 "<title>Create Item</title>" +
                 "</header>\n" +
                 "<body>\n" +
-                "<h1>Create new item</h1>\n"+
+                "<h1>Create new item</h1>\n" +
                 "<form id=\"createItemForm\" method=\"post\">\n" +
                 "    <label for=\"name\">Name:</label><br>" +
                 "    <input id=\"name\" placeholder=\"Komkommer\" name=\"name\" type=\"text\"><br>\n" +
@@ -60,17 +60,17 @@ public class createItemController {
 
                 "    <input type=\"submit\" id=\"submitButton\" value=\"Submit\">\n" +
                 "</form>\n" +
-                "<h1>All items</h1>\n"+
-                getItems()+
+                "<h1>All items</h1>\n" +
+                getItems() +
                 "</body>\n" +
                 "</html>";
     }
 
-    public List<String> getItems(){
+    public List<String> getItems() {
         List<Item> a = itemService.getAll();
         List<String> b = new ArrayList<String>();
-        for(Item i : a){
-            b.add("ID: "+ i.getId()+"Name: " + i.getName() + "\n" + "Description: " + i.getDescription() + "\n" + "Price: " + i.getPrice()) ;
+        for (Item i : a) {
+            b.add("ID: " + i.getId() + " Name: " + i.getName() + "\n" + " Description: " + i.getDescription() + "\n" + " Price: " + i.getPrice());
         }
         return b;
     }
