@@ -51,9 +51,9 @@ public class viewStorageController {
                     " | " +
                     " Price: " + i.getPrice() +
                     " | " +
-                    "<input id=\"amountInput\" placeholder=\"0\" type=\"number\">"+
-                    "<button id=\"saveButton\">Opslaan</button>" +
-                    "<button id=\"deleteButton\">Verwijderen</button>" +
+                    "<input id=\"INPUT" + i.getId() + "\" placeholder=\"0\" type=\"number\">"+
+                    "<button onClick=\"saveButtonFunc(this.id)\" id=\"BUTTON" + i.getId() +"\">Opslaan</button>" +
+                    "<button onClick=\"deleteButtonFunc(this.id)\" id=\"DELBUTTON" + i.getId() + "\">Verwijderen</button>" +
                     "<br>"
             );
         }

@@ -35,7 +35,9 @@ public class loginController {
                         "</body>\n" +
                         "</html>";
             } else {
-                return "OEPSIE";
+                return
+                        "<html>"
+                        ;
             }
         }
         return null;
@@ -74,8 +76,8 @@ public class loginController {
                 "                    <input type=\"password\" id=\"password\" class=\"form-control\" name=\"password\" placeholder=\"pwd\">\n" +
                 "                </div>\n" +
                 "                <button type=\"submit\" id=\"submitButton\" class=\"btn btn-black\" value=\"Submit\">Login</button>\n" +
-                "                <button onclick=\"registerButtonClick()\" id=\"registerButton\" class=\"btn btn-secondary\">Register</button>\n" +
                 "            </form>\n" +
+                "                <br><button onclick=\"registerButtonClick()\" id=\"registerButton\" class=\"btn btn-secondary\">Register</button>\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "</div>\n" +
