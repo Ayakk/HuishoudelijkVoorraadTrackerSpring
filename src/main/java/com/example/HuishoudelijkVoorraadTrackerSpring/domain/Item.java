@@ -14,4 +14,7 @@ public class Item implements IItem{
     private double price;
     @Getter @Setter
     private int quantity;
+//    @Getter @Setter
+//    private int inventoryID;
+
 }

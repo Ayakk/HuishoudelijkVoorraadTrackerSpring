@@ -1,7 +1,7 @@
 package com.example.HuishoudelijkVoorraadTrackerSpring.controller;
 
 import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Item;
-import com.example.HuishoudelijkVoorraadTrackerSpring.services.ItemService;
+import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.ItemRepo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/deleteItem")
 public class deleteItemController {
     @Autowired
-    ItemService itemService;
+    ItemRepo itemRepo;
 
     @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
     public String itemGet() {
@@ -42,16 +42,16 @@ public class deleteItemController {
     @PostMapping()
     public String deleteitem(Item newItem) {
         System.out.println("ID:" + newItem.getId());
-        for(Item oldItem : itemService.getAll()){
+        for(Item oldItem : itemRepo.findAll()){
             if(oldItem.getId().equals(newItem.getId())){
-                itemService.delete(oldItem);
+                itemRepo.delete(oldItem);
             }
         }
         return "register_success";
     }
 
     public List<String> getItems(){
-        List<Item> a = itemService.getAll();
+        List<Item> a = itemRepo.findAll();
         List<String> b = new ArrayList<String>();
         for(Item i : a){
             b.add("ID: "+ i.getId()+"Name: " + i.getName() + "\n" + "Description: " + i.getDescription() + "\n" + "Price: " + i.getPrice()) ;

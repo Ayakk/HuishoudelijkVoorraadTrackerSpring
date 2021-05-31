@@ -1,11 +1,55 @@
-// document.addEventListener("DOMContentLoaded", () =>{
-//     let saveButton = document.querySelector('#saveButton')
-//     saveButton.addEventListener('click', saveButtonFunc)
-//     let deleteButton = document.querySelector('#deleteButton')
-//     deleteButton.addEventListener('click', deleteButtonFunc)
-//
-// })
+document.addEventListener("DOMContentLoaded", () =>{
+    let IDdata = sessionStorage.getItem('userID')
+    let ProductData = sessionStorage.getItem('products')
 
+    console.log("Session Storage Items: \n User ID: " + IDdata + "\n Products(ID + Quantity): " +  ProductData)
+
+    // sendUserID(data)
+    sendProducts(IDdata,ProductData)
+    reload()
+})
+
+window.onload = function() {
+    //considering there aren't any hashes in the urls already
+    if(!window.location.hash) {
+        //setting window location
+        window.location = window.location + '#loaded';
+        //using reload() method to reload web page
+        window.location.reload();
+    }
+}
+
+function sendUserID(id){
+    const userID = {
+        userID: id,
+    }
+
+    fetch('http://localhost:8080/viewStorage/getProducts', {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userID),
+    })
+}
+
+
+function sendProducts(id, data2){
+    const products = {
+        id: id,
+        products: data2,
+    }
+
+    fetch('http://localhost:8080/viewStorage/getProducts', {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(products),
+    })
+}
 
 
 function saveButtonFunc(id){
@@ -23,11 +67,12 @@ function saveButtonFunc(id){
     var inputValue= document.getElementById(id2).value
     console.log("Value of :" + id2 + " is: "+ inputValue)
     const amount = {
-        productID: id,
-        amount: inputValue,
+        id: id,
+        quantity: inputValue,
+        list_inventory_id: sessionStorage.getItem('userID'),
     }
 
-    fetch('http://localhost:8080/viewStorage', {
+    fetch('http://localhost:8080/viewStorage/updateAmounts', {
         method: 'POST', // or 'PUT'
         headers: {
             'Accept': 'application/json',
@@ -35,6 +80,9 @@ function saveButtonFunc(id){
         },
         body: JSON.stringify(amount),
     })
+
+
+
 }
 
 function deleteButtonFunc(id){

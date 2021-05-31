@@ -1,7 +1,7 @@
 package com.example.HuishoudelijkVoorraadTrackerSpring.controller;
 
 import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Item;
-import com.example.HuishoudelijkVoorraadTrackerSpring.services.ItemService;
+import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.ItemRepo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/createItem")
 public class createItemController {
     @Autowired
-    ItemService itemService;
+    ItemRepo itemRepo;
 
     @PostMapping()
     public String createItem(Item item) {
@@ -33,7 +33,7 @@ public class createItemController {
         System.out.println("ItemPage itemName: " + item.getName());
         System.out.println("ItemPage itemDscp: " + item.getDescription());
         System.out.println("ItemPage itemPrice: " + item.getPrice());
-        itemService.save(item);
+        itemRepo.save(item);
         return "register_success";
     }
 
@@ -67,7 +67,7 @@ public class createItemController {
     }
 
     public List<String> getItems() {
-        List<Item> a = itemService.getAll();
+        List<Item> a = itemRepo.findAll();
         List<String> b = new ArrayList<String>();
         for (Item i : a) {
             b.add("ID: " + i.getId() + " Name: " + i.getName() + "\n" + " Description: " + i.getDescription() + "\n" + " Price: " + i.getPrice());

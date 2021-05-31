@@ -1,6 +1,5 @@
 package com.example.HuishoudelijkVoorraadTrackerSpring.repositories;
 
-import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Account;
 import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

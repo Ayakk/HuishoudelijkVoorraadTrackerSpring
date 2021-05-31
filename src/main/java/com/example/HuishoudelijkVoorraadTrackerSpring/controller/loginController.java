@@ -1,43 +1,73 @@
 package com.example.HuishoudelijkVoorraadTrackerSpring.controller;
 
 import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Account;
-import com.example.HuishoudelijkVoorraadTrackerSpring.services.AccountService;
+import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Inventory;
+import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.AccountRepo;
+import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.InventoryRepo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Produces;
+import java.util.List;
 
 @RestController
 @Log4j2
 @RequestMapping("/login")
 public class loginController {
     @Autowired
-    AccountService accountService;
+    AccountRepo accountRepo;
+    @Autowired
+    InventoryRepo inventoryRepo;
 
     @PostMapping()
     @Produces(MediaType.TEXT_HTML_VALUE)
     public String processRegister(Account account) {
         String username = account.getUsername();
         String password = account.getPassword();
+        Long id= Long.valueOf(0);
+        String inventoryProductsfromDB = "";
+
+        for(Account dbAccounts : accountRepo.findAll()){
+            if (account.getUsername().equals(dbAccounts.getUsername())){
+                id = dbAccounts.getId();
+            }
+        }
+
+        for (Inventory inventory : inventoryRepo.findAll()){
+            if (inventory.getId().equals(id)){
+                inventoryProductsfromDB = inventory.getProducts();
+                System.out.println(inventoryProductsfromDB);
+            }
+        }
+
+
+
         System.out.println("Username LoginC: " + username);
         System.out.println("Username passwordC: " + password);
-
-        for (Account a : accountService.getAll()) {
+        System.out.println("ACCOUNT ID: " + id);
+        List<Account> allAccounts = accountRepo.findAll();
+        for (Account a : allAccounts) {
+            System.out.println("");
+            System.out.println("LOOP USERNAME: " + a.getUsername() + " COMPARED TO: " + username);
+            System.out.println("LOOP PASSWORD: " + a.getPassword() + " COMPARED TO: "  + password);
             if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
+                System.out.println("SUCCESVOL AFGEROND INLOGGEN");
                 return "<html>\n" +
                         "<header>" +
                         "<title>WelcomeTest</title>" +
                         "</header>\n" +
                         "<body>\n" +
-                        "<script>window.location = \"http://localhost:8080/viewStorage\"</script>" +
+                        "<script>" +
+                        "window.location = \"http://localhost:8080/viewStorage\"\n" +
+                        "sessionStorage.setItem(\"userID\", "+ id +")\n"+
+                        "sessionStorage.setItem(\"products\", \""+ inventoryProductsfromDB +"\")\n"+
+//                        "let data = sessionStorage.getItem(userID)\n" +
+//                        "console.log(\"LOGIN ID: \" + data)\n"+
+                        "</script>" +
                         "</body>\n" +
                         "</html>";
-            } else {
-                return
-                        "<html>"
-                        ;
             }
         }
         return null;

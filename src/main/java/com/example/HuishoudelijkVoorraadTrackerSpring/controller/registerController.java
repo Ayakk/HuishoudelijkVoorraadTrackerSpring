@@ -1,7 +1,7 @@
 package com.example.HuishoudelijkVoorraadTrackerSpring.controller;
 
 import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Account;
-import com.example.HuishoudelijkVoorraadTrackerSpring.services.AccountService;
+import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.AccountRepo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,7 +14,7 @@ import javax.ws.rs.Produces;
 @RequestMapping("/register")
 public class registerController {
     @Autowired
-    AccountService accountService;
+    AccountRepo accountRepo;
 
     @PostMapping()
     @Produces(MediaType.TEXT_HTML_VALUE)
@@ -31,7 +31,7 @@ public class registerController {
         System.out.println("LoginPage username: "+account.getUsername());
         System.out.println("LoginPage password: "+account.getPassword());
         System.out.println("LoginPage role: "+account.getRole());
-        accountService.save(account);
+        accountRepo.save(account);
         return "register_success";
     }
 
