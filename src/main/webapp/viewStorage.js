@@ -8,6 +8,31 @@ document.addEventListener("DOMContentLoaded", () =>{
     sendProducts(IDdata,ProductData)
 })
 
+function shoppingListFunc(){
+
+}
+
+function logOutFunc(){
+    sessionStorage.clear()
+    fetch('http://localhost:8080/viewStorage/logout', {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: "LOGOUT",
+    })
+    window.location="http://localhost:8080/login"
+}
+
+function gotoCreateItem(){
+    window.location ="http://localhost:8080/createItem"
+}
+
+function gotoUpdateItem(){
+    window.location ="http://localhost:8080/updateItem"
+}
+
 window.onload = function() {
     //considering there aren't any hashes in the urls already
     if(!window.location.hash) {

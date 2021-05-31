@@ -31,6 +31,12 @@ public class viewStorageController {
         return "Succes";
     }
 
+    @PostMapping("/logout")
+    public String logOut(){
+        map.clear();
+        return "";
+    }
+
     @PostMapping("/updateAmounts")
     public String updateAmount(@RequestBody Item item){
         System.out.println("Received Item ID: " + item.getId() + "\nReceived Amount: " + item.getQuantity() + "\nReceived inventoryID: " + item.getInventoryid());
@@ -61,13 +67,15 @@ public class viewStorageController {
         System.out.println("TEST2");
         System.out.println("INVENTORY ID: "+inventory.getId());
         System.out.println(inventory.getProducts());
+
+
         String products = inventory.getProducts();
         String[] parts = products.split(";");
         for(String i : parts){
             String[] commaParts = i.split(",");
             map.put(Integer.parseInt(commaParts[0]), Integer.parseInt(commaParts[1]));
         }
-        System.out.println(map);
+        System.out.println("getInvProductsMAP: "+map);
 
         return "";
     }
@@ -84,6 +92,11 @@ public class viewStorageController {
                 "<body>\n" +
                 "<h1>All items</h1>\n" +
                 getItems() +
+                "<hr>"+
+                "<button onClick=\"gotoCreateItem()\" id=\"addItemButton\">Voeg Item Toe</button>" +
+                "<button onClick=\"gotoUpdateItem()\" id=\"updateItemButton\">Pas Item Aan</button>" +
+                "<button onClick=\"shoppingListFunc()\" id=\"shoppingListButton\">Boodschappen Lijstje</button>" +
+                "<button onClick=\"logOutFunc()\" id=\"logOutButton\">Log uit</button>" +
                 "</body>\n" +
                 "</html>";
     }
@@ -95,7 +108,7 @@ public class viewStorageController {
         for (Item i : a) {
             int z = Math.toIntExact(i.getId());
             if(map.containsKey(z)){
-                System.out.println(map.get(z));
+//                System.out.println(map.get(z));
                 System.out.println("Answer TRUE");
                 b.add(
                         "ID: " + i.getId() +
@@ -106,7 +119,7 @@ public class viewStorageController {
                                 " | " +
                                 " Price: " + i.getPrice() +
                                 " | " +
-                                "<input id=\"INPUT" + i.getId() + "\" placeholder=" + i.getQuantity() + " type=\"number\">" +
+                                "<input id=\"INPUT" + i.getId() + "\" placeholder=" + map.get(z) + " type=\"number\">" +
                                 "<button onClick=\"saveButtonFunc(this.id)\" id=\"BUTTON" + i.getId() + "\">Opslaan</button>" +
                                 "<button onClick=\"deleteButtonFunc(this.id)\" id=\"DELBUTTON" + i.getId() + "\">Verwijderen</button>" +
                                 "<br>"
