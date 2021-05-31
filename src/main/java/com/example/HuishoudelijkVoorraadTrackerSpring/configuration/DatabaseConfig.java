@@ -56,7 +56,7 @@ public class DatabaseConfig
                 newItem.setName("Appel");
                 newItem.setPrice(1);
                 newItem.setQuantity(1);
-//                newItem.setInventoryID(0);
+                newItem.setInventoryid(0);
                 itemRepo.save(newItem);
             }
             if(Melk == null){
@@ -66,7 +66,7 @@ public class DatabaseConfig
                 newItem.setName("Melk");
                 newItem.setPrice(1.99);
                 newItem.setQuantity(1);
-//                newItem.setInventoryID(0);
+                newItem.setInventoryid(0);
                 itemRepo.save(newItem);
             }
             if(Banaan == null){
@@ -76,7 +76,7 @@ public class DatabaseConfig
                 newItem.setName("Banaan");
                 newItem.setPrice(4.99);
                 newItem.setQuantity(1);
-//                newItem.setInventoryID(0);
+                newItem.setInventoryid(0);
                 itemRepo.save(newItem);
             }
 

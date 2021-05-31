@@ -30,9 +30,9 @@ public class Item implements IItem {
     @Getter @Setter
     @Column(name="quantity")
     private int quantity;
-//    @Getter @Setter
-//    @Column(name="inventoryID")
-//    private int inventoryID;
+    @Getter @Setter
+    @Column(name="inventoryid")
+    private int inventoryid;
 
 
     public com.example.HuishoudelijkVoorraadTrackerSpring.domain.Item convertToDomain(){

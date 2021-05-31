@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     // sendUserID(data)
     sendProducts(IDdata,ProductData)
-    reload()
 })
 
 window.onload = function() {
@@ -51,10 +50,8 @@ function sendProducts(id, data2){
     })
 }
 
-
+//functionality for when button gets pressed, called in html code.
 function saveButtonFunc(id){
-    // var inputValue= document.getElementById('amountInput').value
-    // console.log("inputValue: " + inputValue)
     console.log("SAVE BUTTON INITIAL ID: " + id)
     var id = ""+id
     id = id.replace("BUTTON", "")
@@ -66,10 +63,12 @@ function saveButtonFunc(id){
     }
     var inputValue= document.getElementById(id2).value
     console.log("Value of :" + id2 + " is: "+ inputValue)
+    var test = sessionStorage.getItem('userID');
+
     const amount = {
         id: id,
         quantity: inputValue,
-        list_inventory_id: sessionStorage.getItem('userID'),
+        inventoryid: test,
     }
 
     fetch('http://localhost:8080/viewStorage/updateAmounts', {

@@ -33,7 +33,7 @@ public class viewStorageController {
 
     @PostMapping("/updateAmounts")
     public String updateAmount(@RequestBody Item item){
-        System.out.println("Received ID: " + item.getId() + "\nReceived Amount: " + item.getQuantity());
+        System.out.println("Received Item ID: " + item.getId() + "\nReceived Amount: " + item.getQuantity() + "\nReceived inventoryID: " + item.getInventoryid());
         int z = Math.toIntExact(item.getId());
         System.out.println("MAP BEFORE: " + map);
         map.remove(z);
@@ -48,8 +48,10 @@ public class viewStorageController {
 
 
         System.out.println("MAP AFTER: " + s);
-//        Inventory inventory = new Inventory((long) item.getInventoryID(), s);
-//        inventoryRepo.save(inventory);
+        System.out.println(item.getInventoryid());
+        System.out.println((long) item.getInventoryid());
+        Inventory inventory = new Inventory((long) item.getInventoryid(), s);
+        inventoryRepo.save(inventory);
 
         return "";
     }
@@ -57,7 +59,7 @@ public class viewStorageController {
     @PostMapping("/getProducts")
     public String getInventoryProducts(@RequestBody Inventory inventory){
         System.out.println("TEST2");
-        System.out.println(inventory.getId());
+        System.out.println("INVENTORY ID: "+inventory.getId());
         System.out.println(inventory.getProducts());
         String products = inventory.getProducts();
         String[] parts = products.split(";");
@@ -93,7 +95,7 @@ public class viewStorageController {
         for (Item i : a) {
             int z = Math.toIntExact(i.getId());
             if(map.containsKey(z)){
-                System.out.println(map.get(i.getId()));
+                System.out.println(map.get(z));
                 System.out.println("Answer TRUE");
                 b.add(
                         "ID: " + i.getId() +

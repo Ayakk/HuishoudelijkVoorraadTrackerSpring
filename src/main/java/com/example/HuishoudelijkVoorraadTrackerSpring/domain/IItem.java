@@ -7,8 +7,8 @@ public interface IItem {
     double getPrice();
     int getQuantity();
 
-//    int getInventoryID();
-//    void setInventoryID(int id);
+    int getInventoryid();
+    void setInventoryid(int inventoryid);
 
     void setId(Long id);
     void setName(String name);
