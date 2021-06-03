@@ -31,18 +31,6 @@ public class DatabaseConfig
                 accountRepo.save(newAccount);
             }
 
-//            // hier wordt een nieuwe inventory aangemaakt als die nog niet bestaat
-//            var inventory = inventoryRepo.findById(1L).orElse(null);
-//
-//            if (inventory == null){
-//                System.out.println("inventory bestaat niet,de inventory wordt aangemaakt");
-//                Inventory newInventory = new Inventory();
-//                Item i = new Item();
-//                newInventory.getInventoryList().add(i);
-//                inventoryRepo.save(newInventory);
-//            }
-
-
 
             // hier wordt een nieuwe item aangemaakt als die nog niet bestaat
             var Appel = itemRepo.findByName("Appel").orElse(null);

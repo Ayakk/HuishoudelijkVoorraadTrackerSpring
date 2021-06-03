@@ -9,20 +9,20 @@
 <h1>Create new item</h1>
 <form id="createItemForm">
 
-    <label for="name">Name:</label>
-    <input id="name" name="name" placeholder="Komkommer" type="text"><br>
+    <label aria-label="Name" for="name">Name:</label>
+    <input aria-label="Input for name" id="name" name="name" placeholder="Komkommer" type="text"><br>
 
-    <label for="description">description:</label>
-    <input id="description" name="description" placeholder="Heel gezond" type="text"><br>
+    <label aria-label="Description" for="description">description:</label>
+    <input aria-label="Input for description" id="description" name="description" placeholder="Heel gezond" type="text"><br>
 
-    <label for="price">price:</label>
-    <input id="price" name="price" placeholder="10.00" type="number"> <br>
-    <input id="submitButton" onclick="postItem()" type="submit" value="Submit">
+    <label aria-label="Price" for="price">price:</label>
+    <input aria-label="Input for price" id="price" name="price" placeholder="10.00" type="number"> <br>
+    <input aria-label="Submit button for create item form" id="submitButton" onclick="postItem()" type="submit" value="Submit">
 
 </form>
 <h1>All items</h1>
-<div id="allItemsDiv">
+<div aria-label="All items" id="allItemsDiv">
 </div>
-<button id="createItemReturnButton" name="createItemReturnButton" onclick="goToStoragePage()">Ga terug naar het inventaris pagina</button>
+<button aria-label="Go back to inventory page button" id="createItemReturnButton" name="createItemReturnButton" onclick="goToStoragePage()">Ga terug naar het inventaris pagina</button>
 </body>
 </html>

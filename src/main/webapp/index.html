@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
 <head>
     <title>Getting Started: Handling Form Submission</title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
@@ -19,16 +20,16 @@
 <div class="main">
     <div class="col-md-6 col-sm-12">
         <div class="login-form">
-            <form id="loginform" action="loginHTML" method="post">
+            <form aria-label="Login form" id="loginform" action="loginHTML" method="post">
                 <div class="form-group">
-                    <label for="username">username:</label>
-                    <input type="text" name="username" id="username" class="form-control" placeholder="UserName">
-                    <label for="password">password:</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+                    <label aria-label="Username" for="username">username:</label>
+                    <input aria-label="Username input" type="text" name="username" id="username" class="form-control" placeholder="UserName">
+                    <label aria-label="Password" for="password">password:</label>
+                    <input aria-label="Password input" type="password" name="password" id="password" class="form-control" placeholder="Password">
                 </div>
-                <button type="submit" id="submitButton" class="btn btn-black">Login</button>
+                <button aria-label="Submit button for loginform" type="submit" id="submitButton" class="btn btn-black">Login</button>
             </form>
-            <button onclick="goToRegisterPage()" id="registerButton" class="btn btn-secondary">Register</button>
+            <button aria-label="Register button" onclick="goToRegisterPage()" id="registerButton" class="btn btn-secondary">Register</button>
         </div>
     </div>
 </div>
