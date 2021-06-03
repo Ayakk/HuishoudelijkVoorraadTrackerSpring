@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", () =>{
     getAllItems()
 })
 
+function goToStoragePage(){
+    window.location="viewStorage.html"
+}
 
 function getAllItems(){
     fetch('http://localhost:8080/createItem/getAllItems', {
@@ -41,4 +44,6 @@ function postItem(){
         },
         body: JSON.stringify(item),
     })
+
+    window.location = "viewStorage.html"
 }

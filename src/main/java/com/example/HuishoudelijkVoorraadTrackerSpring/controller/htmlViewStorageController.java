@@ -28,9 +28,34 @@ public class htmlViewStorageController {
     Map<Integer, Integer> mapForBackend = new HashMap<Integer, Integer>();
     Map<Integer, Item> mapForJS2 = new HashMap<Integer, Item>();
 
+    @PostMapping("/deleteItem")
+    public String deleteItem(@RequestBody Item item){
+        mapForBackend.clear();
+        mapForJS.clear();
+        mapForJS2.clear();
+
+        System.out.println("Function deleteItem");
+        for(Inventory i : inventoryRepo.findAll()){
+            System.out.println("LOOP");
+            int z = Math.toIntExact(i.getId());
+            if(z == item.getInventoryid()){
+                System.out.println("IF");
+                String s = i.getProducts();
+                String toReplace = item.getId() + "," + item.getQuantity() + ";";
+                System.out.println(s + " + " + toReplace);
+                String newString = s.replace(toReplace, "");
+                System.out.println("S REPLACED " + newString);
+                i.setProducts(newString);
+                inventoryRepo.save(i);
+            }
+        }
+        return "";
+    }
 
     @PostMapping("/giveID")
     public String getID(@RequestBody Inventory inventory){
+        mapForBackend.clear();
+
         System.out.println("getID inventoryID: " + inventory.getId());
 
         for (Inventory i : inventoryRepo.findAll()){
@@ -57,6 +82,7 @@ public class htmlViewStorageController {
 
     @GetMapping("/getInventory")
     public Map<Integer, String> getInventoryProducts(){
+        mapForJS.clear();
         for(Inventory i : inventoryRepo.findAll()){
             mapForJS.put(Math.toIntExact(i.getId()), i.getProducts());
         }

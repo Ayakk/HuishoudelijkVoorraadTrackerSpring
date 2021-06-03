@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () =>{
-    getInventory()
-    giveID()
+
 })
 
 function gotoCreateItem(){
@@ -11,7 +10,43 @@ function gotoUpdateItem(){
     window.location ="updateItem.html"
 }
 
+function shoppingListFunc(){
+    fetch('http://localhost:8080/htmlStorage/getItemData', {
+        method: 'GET', // or 'PUT'
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => response.json())
+        .then(function(data){
+            console.log(data)
+            var text = "";
+            let contacts = new Map()
+            for (x in data) {
+                text = "ID: " + data[x]['id'] + "NAAM: " + data[x]['name']
+                var input = prompt(text);
+                if (input != null && input != "") {
+                    var berekening = input - data[x]['quantity']
+                    contacts.set(data[x]['name'], berekening)
+                }
+            }
+            var text3= "";
+
+            for (const entry of contacts.entries()) {
+                if(entry[1] < 0){
+                    text3 += "Product: " + entry[0]+ " " + "Hoeveelheid: 0, u heeft genoeg van dit product \n"
+                } else{
+                    text3 += "Product: " + entry[0]+ " " + "Hoeveelheid: "+ entry[1] +" \n"
+                }
+            }
+            alert(text3)
+        })
+}
+
 window.onload = function() {
+    getInventory()
+    giveID()
     //considering there aren't any hashes in the urls already
     if(!window.location.hash) {
         //setting window location
@@ -97,15 +132,17 @@ function getItems(id, products){
             var text = "";
             for (x in data) {
                 console.log(x)
-                text +="ID: "+data[x]['id'] + "<br>"
-                text +="NAAM: "+data[x]['name'] + "<br>"
-                text +="OMSCHRIJVING: "+data[x]['description'] + "<br>"
-                text +="PRIJS: "+data[x]['price'] + "<br>"
-                text +="<input id=\"INPUT"+data[x]['id'] +"\" placeholder="+ data[x]['quantity'] +" type=\"number\">"
+                text +="<div id=\"itemDiv" + data[x]['id'] + "\">"
+                text +="ID:             "+data[x]['id'] + "<br>"
+                text +="NAAM:           "+data[x]['name'] + "<br>"
+                text +="OMSCHRIJVING:   "+data[x]['description'] + "<br>"
+                text +="PRIJS:          "+data[x]['price'] + "<br>"
+                text +="HOEVEELHEID:    <input id=\"INPUT"+data[x]['id'] +"\" placeholder="+ data[x]['quantity'] +" type=\"number\">"
                 text += "<button id=\"saveButton" + data[x]['id'] +"\" onClick=saveButtonFunc(this.id) id=BUTTON>Opslaan</button>"
                 text += "<button id=\"deleteButton" + data[x]['id'] +"\" onClick=deleteButtonFunc(this.id) id=BUTTON>Verwijderen</button>"
                 text +="<br>"
                 text +="<hr>"
+                text +="</div>"
             }
             document.getElementById('itemName').innerHTML = text
             console.log(data[6]['price'])
@@ -140,4 +177,31 @@ function saveButtonFunc(id){
         },
         body: JSON.stringify(amount),
     })
+}
+
+function deleteButtonFunc(id){
+    console.log("DELETE BUTTON INITIAL ID: " + id)
+    var id = ""+id
+    var id = id.replace("deleteButton", "")
+    console.log("received ID: " + id)
+
+    var quantityValue= document.getElementById('INPUT'+id).getAttribute('placeholder')
+
+
+    const item = {
+        id: id,
+        quantity: quantityValue,
+        inventoryid: sessionStorage.getItem('userID')
+    }
+    fetch('htmlStorage/deleteItem', {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(item),
+    })
+
+    var el = document.getElementById('itemDiv' + id);
+    el.remove(); // Removes the div with the 'div-02' id
 }
