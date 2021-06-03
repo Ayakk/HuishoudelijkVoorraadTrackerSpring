@@ -1,32 +1,17 @@
-document.addEventListener("DOMContentLoaded", () =>{
-    let submitButton = document.querySelector('#submitButton')
-    //luistert naar kliks
-    submitButton.addEventListener('click', loginSubmit)
-
-    let registerButton = document.querySelector('#registerButton')
-    //luistert naar kliks
-    registerButton.addEventListener('click', registerButtonClick)
-})
-
-
-function registerButtonClick(){
-    window.location = "http://localhost:8080/register"
-}
-
 function loginSubmit() {
-    console.log("test")
-    const queryString = window.location.search;
-    console.log(queryString);
-    const urlParams = new URLSearchParams(queryString);
-    const usernameVal = urlParams.get('username')
-    const passwordVal = urlParams.get('password')
+    console.log("loginsubmit() FUNCTION CALL")
+    var usernameVal= document.getElementById('username').value
+    var passwordVal= document.getElementById('password').value
+    console.log(usernameVal)
+    console.log(passwordVal)
+
 
     const user = {
         username: usernameVal,
         password: passwordVal
     }
 
-    fetch('http://localhost:8080/index.html', {
+    fetch('http://localhost:8080/loginHTML', {
         method: 'POST', // or 'PUT'
         headers: {
             'Accept': 'application/json',
