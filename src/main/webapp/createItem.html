@@ -7,19 +7,22 @@
 </head>
 <body>
 <h1>Create new item</h1>
-<form id="createItemForm" method="post">
+<form id="createItemForm">
 
-    <label for="name">Name:</label><br>
+    <label for="name">Name:</label>
     <input id="name" name="name" placeholder="Komkommer" type="text"><br>
 
-    <label for="description">description:</label><br>
-    <input id="description" name="description" placeholder="Heel gezond" type="text">
+    <label for="description">description:</label>
+    <input id="description" name="description" placeholder="Heel gezond" type="text"><br>
 
-    <label for="price">price:</label><br>
-    <input id="price" name="price" placeholder="10.00" type="number">
-    <input id="submitButton" type="submit" value="Submit">
+    <label for="price">price:</label>
+    <input id="price" name="price" placeholder="10.00" type="number"> <br>
+    <input id="submitButton" onclick="postItem()" type="submit" value="Submit">
 
 </form>
 <h1>All items</h1>
+<div id="allItemsDiv">
+
+</div>
 </body>
 </html>
