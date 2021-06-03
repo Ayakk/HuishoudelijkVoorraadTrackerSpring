@@ -1,3 +1,7 @@
+function goToRegisterPage(){
+    window.location = "register.html"
+}
+
 function loginSubmit() {
     console.log("loginsubmit() FUNCTION CALL")
     var usernameVal= document.getElementById('username').value
