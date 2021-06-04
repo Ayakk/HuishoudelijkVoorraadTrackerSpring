@@ -33,6 +33,28 @@ public class htmlAddItemController {
         return mapForJS;
     }
 
+    @PostMapping()
+    ResponseEntity<String> addExistingItem(@RequestBody Item item ){
+        System.out.println(item.getInventoryid());
+        System.out.println(item.getId());
+
+        Long inventoryIDtoLong = (long) item.getInventoryid();
+        for(Inventory inventory : inventoryRepo.findAll()){
+            if(inventory.getId().equals(inventoryIDtoLong)){
+                String s = inventory.getProducts();
+                for(Item item1 : itemRepo.findAll()){
+                    if(item1.getId().equals(item.getId())){
+                        s+=item1.getId()+",0;";
+                        inventory.setProducts(s);
+                        inventoryRepo.save(inventory);
+                    }
+                }
+            }
+        }
+        return new ResponseEntity<>("Item added!", HttpStatus.OK);
+    }
+
+
     @PostMapping("/postItem")
     ResponseEntity<String> createItem(@RequestBody Item item ) {
         itemRepo.save(item);

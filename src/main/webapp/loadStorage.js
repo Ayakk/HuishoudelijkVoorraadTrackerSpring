@@ -135,17 +135,17 @@ function getItems(id, products){
             var text = "";
             for (x in data) {
                 console.log(x)
-                text +="<div id=\"itemDiv" + data[x]['id'] + "\">"
+                text +="<div class='itemDivClass' id=\"itemDiv" + data[x]['id'] + "\">"
                 text +="<label aria-label=\"ID\">ID:              </label>"+data[x]['id'] + "<br>"
                 text +="<label aria-label=\"Name\">NAAM:            </label>"+data[x]['name'] + "<br>"
                 text +="<label aria-label=\"Description\">OMSCHRIJVING:    </label>"+data[x]['description'] + "<br>"
                 text +="<label aria-label=\"Price\">PRIJS:           </label>"+data[x]['price'] + "<br>"
                 text +="<label aria-label=\"Amount\" for=\'INPUT"+data[x]['id']+ "\'>HOEVEELHEID:     </label><input aria-label=\"Input amount\" id=\"INPUT"+data[x]['id'] +"\" placeholder="+ data[x]['quantity'] +" type=\"number\">"
                 text +="<button aria-label=\"Save button\" id=\"saveButton" + data[x]['id'] +"\" onClick=saveButtonFunc(this.id) id=BUTTON>Opslaan</button>"
-                text +="<button aria-label=\"Delete Button\" id=\"deleteButton" + data[x]['id'] +"\" onClick=deleteButtonFunc(this.id) id=BUTTON>Verwijderen</button>"
+                text +="<button aria-label=\"Delete Button\" id=\"deleteButton" + data[x]['id'] +"\" onClick=deleteButtonFunc(this.id) id=BUTTON>Product Verwijderen</button>"
                 text +="<br>"
-                text +="<hr>"
                 text +="</div>"
+                text +="<br>"
             }
             document.getElementById('itemName').innerHTML = text
             console.log(data[6]['price'])

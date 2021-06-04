@@ -6,6 +6,25 @@ function goToStoragePage(){
     window.location="viewStorage.html"
 }
 
+function postExistingItem(){
+    var id = sessionStorage.getItem('userID')
+    var itemID = document.getElementById('productid').value
+    const item = {
+        inventoryid: id,
+        id: itemID
+    }
+    fetch('/createItem', {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(item),
+    })
+
+    window.location = "viewStorage.html"
+}
+
 function getAllItems(){
     fetch('/createItem/getAllItems', {
         method: 'GET', // or 'PUT'
@@ -18,7 +37,11 @@ function getAllItems(){
         .then(function(data){
             var text = "";
             for (x in data){
-                text += JSON.stringify(data[x]) + "<br>"
+                text += "ID: " + JSON.stringify(data[x]['id']) +
+                    ", NAME: " + JSON.stringify(data[x]['name']) +
+                    ", DESCRIPTION: " + JSON.stringify(data[x]['description']) +
+                    ", PRICE: " + JSON.stringify(data[x]['price']) +
+                    "<br><br>"
             }
             document.getElementById('allItemsDiv').innerHTML = text
         })

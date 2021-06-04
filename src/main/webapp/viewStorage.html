@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <title>View Storage</title>
     <script src="loadStorage.js"></script>
+    <link rel="stylesheet" href="storage.css">
 </head>
 <body>
 <h2>All items</h2>
-<div aria-label="Item list" id="itemName">
+<div class="allItemsDiv" aria-label="Item list" id="itemName">
 </div>
-<button aria-label="Log out button" id="logOutButton" onClick="logOutFunc()">Log uit</button>
-<button aria-label="Add item button" id="addItemButton" onClick="gotoCreateItem()">Voeg Item Toe</button>
-<button aria-label="Shopping list button" id="shoppingListButton" onClick="shoppingListFunc()">Boodschappen Lijstje</button>
+<div class="navButtons">
+    <button aria-label="Log out button" id="logOutButton" onClick="logOutFunc()">Log uit</button><br>
+    <button aria-label="Add item button" id="addItemButton" onClick="gotoCreateItem()">Voeg Item Toe</button><br>
+    <button aria-label="Shopping list button" id="shoppingListButton" onClick="shoppingListFunc()">Boodschappen Lijstje</button><br>
+</div>
 </body>
 </html>

@@ -4,25 +4,39 @@
     <meta charset="UTF-8">
     <title>Create Item</title>
     <script src="createItem.js"></script>
+    <link href="createItem.css" rel="stylesheet">
 </head>
 <body>
-<h1>Create new item</h1>
-<form id="createItemForm">
+<div class="allDiv">
+    <h1>Maak een nieuw product</h1>
+    <form id="createItemForm">
+        <label aria-label="Name" for="name"></label>
+        <input aria-label="Input for name" id="name" name="name" placeholder="Productnaam" type="text"><br>
 
-    <label aria-label="Name" for="name">Name:</label>
-    <input aria-label="Input for name" id="name" name="name" placeholder="Komkommer" type="text"><br>
+        <label aria-label="Description" for="description"></label>
+        <input aria-label="Input for description" id="description" name="description" placeholder="Productbeschrijving" type="text"><br>
 
-    <label aria-label="Description" for="description">description:</label>
-    <input aria-label="Input for description" id="description" name="description" placeholder="Heel gezond" type="text"><br>
+        <label aria-label="Price" for="price"></label>
+        <input aria-label="Input for price" id="price" name="price" placeholder="Product prijs" type="number"> <br>
+        <input aria-label="Submit button for create item form" id="submitButton" onclick="postItem()" type="submit"
+               value="Submit">
+    </form>
 
-    <label aria-label="Price" for="price">price:</label>
-    <input aria-label="Input for price" id="price" name="price" placeholder="10.00" type="number"> <br>
-    <input aria-label="Submit button for create item form" id="submitButton" onclick="postItem()" type="submit" value="Submit">
+    <form id="addExistingItemForm">
+        <h1>Voeg bestaande product toe met ID</h1>
+        <label aria-label="ID" for="productid"></label>
+        <input aria-label="Input for id" id="productid" name="productid" placeholder="Product ID" type="text"><br>
+        <input aria-label="Submit button for create item form" onclick="postExistingItem()" id="addExistingItemFormSubmitButton" type="submit" value="Submit">
+    </form>
 
-</form>
-<h1>All items</h1>
-<div aria-label="All items" id="allItemsDiv">
+    <h1>All items</h1>
+    <div aria-label="All items" id="allItemsDiv">
+    </div>
 </div>
-<button aria-label="Go back to inventory page button" id="createItemReturnButton" name="createItemReturnButton" onclick="goToStoragePage()">Ga terug naar het inventaris pagina</button>
+<div class="navButtons">
+    <button aria-label="Go back to inventory page button" id="createItemReturnButton" name="createItemReturnButton"
+            onclick="goToStoragePage()">Voorraad
+    </button>
+</div>
 </body>
 </html>
