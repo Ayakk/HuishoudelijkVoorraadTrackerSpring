@@ -7,7 +7,7 @@ function goToStoragePage(){
 }
 
 function getAllItems(){
-    fetch('http://localhost:8080/createItem/getAllItems', {
+    fetch('/createItem/getAllItems', {
         method: 'GET', // or 'PUT'
         headers: {
             'Accept': 'application/json',
@@ -36,7 +36,7 @@ function postItem(){
         description: description,
         price: price
     }
-    fetch('http://localhost:8080/createItem/postItem', {
+    fetch('/createItem/postItem', {
         method: 'POST', // or 'PUT'
         headers: {
             'Accept': 'application/json',

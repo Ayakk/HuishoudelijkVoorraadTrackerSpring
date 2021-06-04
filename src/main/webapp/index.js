@@ -4,7 +4,7 @@ function goToRegisterPage(){
 
 getAllItems()
 function getAllItems(){
-    fetch('createItem/getAllItems', {
+    fetch('/createItem/getAllItems', {
         method: 'GET', // or 'PUT'
         headers: {
             'Accept': 'application/json',
@@ -30,7 +30,7 @@ function loginSubmit() {
         password: passwordVal
     }
 
-    fetch('loginHTML', {
+    fetch('/loginHTML', {
         method: 'POST', // or 'PUT'
         headers: {
             'Accept': 'application/json',

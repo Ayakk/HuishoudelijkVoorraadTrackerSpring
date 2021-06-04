@@ -11,7 +11,7 @@ function gotoUpdateItem(){
 }
 
 function shoppingListFunc(){
-    fetch('http://localhost:8080/htmlStorage/getItemData', {
+    fetch('/htmlStorage/getItemData', {
         method: 'GET', // or 'PUT'
         headers: {
             'Accept': 'application/json',
@@ -61,7 +61,7 @@ window.onload = function() {
 
 function logOutFunc(){
     sessionStorage.clear()
-    fetch('http://localhost:8080/htmlStorage/logout', {
+    fetch('/htmlStorage/logout', {
         method: 'POST', // or 'PUT'
         headers: {
             'Accept': 'application/json',
@@ -69,7 +69,7 @@ function logOutFunc(){
         },
         body: "LOGOUT",
     })
-    window.location="http://localhost:8080/index.html"
+    window.location="/index.html"
 }
 
 
@@ -78,7 +78,7 @@ function giveID(){
     const id = {
         id: x,
     }
-    fetch('http://localhost:8080/htmlStorage/giveID', {
+    fetch('/htmlStorage/giveID', {
         method: 'POST', // or 'PUT'
         headers: {
             'Accept': 'application/json',
@@ -90,7 +90,7 @@ function giveID(){
 
 //getinventory in -> 5,20000;6,3;7,2; format
 function getInventory(){
-    fetch('http://localhost:8080/htmlStorage/getInventory', {
+    fetch('/htmlStorage/getInventory', {
         method: 'GET', // or 'PUT'
         headers: {
             'Accept': 'application/json',
@@ -113,7 +113,7 @@ function getItems(id, products){
         id: id,
         products: products
     }
-    fetch('http://localhost:8080/htmlStorage/giveInventoryData', {
+    fetch('/htmlStorage/giveInventoryData', {
         method: 'POST', // or 'PUT'
         headers: {
             'Accept': 'application/json',
@@ -122,7 +122,7 @@ function getItems(id, products){
         body: JSON.stringify(inventory),
     })
 
-    fetch('http://localhost:8080/htmlStorage/getItemData', {
+    fetch('/htmlStorage/getItemData', {
         method: 'GET', // or 'PUT'
         headers: {
             'Accept': 'application/json',
@@ -172,7 +172,7 @@ function saveButtonFunc(id){
         inventoryid: test,
     }
 
-    fetch('http://localhost:8080/htmlStorage/updateAmounts', {
+    fetch('/htmlStorage/updateAmounts', {
         method: 'POST', // or 'PUT'
         headers: {
             'Accept': 'application/json',
@@ -196,7 +196,7 @@ function deleteButtonFunc(id){
         quantity: quantityValue,
         inventoryid: sessionStorage.getItem('userID')
     }
-    fetch('htmlStorage/deleteItem', {
+    fetch('/htmlStorage/deleteItem', {
         method: 'POST', // or 'PUT'
         headers: {
             'Accept': 'application/json',
