@@ -1,15 +1,14 @@
 package com.example.HuishoudelijkVoorraadTrackerSpring.configuration;
 
 import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Account;
-import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Inventory;
 import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Item;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.AccountRepo;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.InventoryRepo;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.ItemRepo;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.Value;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
