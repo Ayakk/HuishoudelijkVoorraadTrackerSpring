@@ -15,7 +15,7 @@ function loginSubmit() {
         password: passwordVal
     }
 
-    fetch('http://localhost:8080/loginHTML', {
+    fetch('/loginHTML', {
         method: 'POST', // or 'PUT'
         headers: {
             'Accept': 'application/json',
