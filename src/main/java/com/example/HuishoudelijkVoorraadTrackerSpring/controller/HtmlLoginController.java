@@ -6,7 +6,9 @@ import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.AccountRepo;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.InventoryRepo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.FormParam;
@@ -24,7 +26,7 @@ public class HtmlLoginController {
 
     @PostMapping()
     @Produces(MediaType.TEXT_HTML_VALUE)
-    public String processRegister(@FormParam("username") String username, @FormParam("password") String password) {
+    ResponseEntity<String> processRegister(@FormParam("username") String username, @FormParam("password") String password) {
         System.out.println("LOGIN USERNAME: "+username);
         System.out.println("LOGIN PASSWORD: "+password);
 
@@ -52,15 +54,16 @@ public class HtmlLoginController {
             System.out.println("LOOP PASSWORD: " + a.getPassword() + " COMPARED TO: "  + password);
             if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                 System.out.println("SUCCESVOL AFGEROND INLOGGEN");
-                return "<script>" +
-                        "window.location = \"http://localhost:8080/viewStorage.html\"\n" +
+
+                String s = "<script>window.location = \"http://localhost:8080/viewStorage.html\"\n" +
                         "sessionStorage.setItem(\"userID\", "+ id +")\n"+
                         "sessionStorage.setItem(\"products\", \""+ inventoryProductsfromDB +"\")\n"+
                         "</script>";
+
+                return new ResponseEntity<>(s, HttpStatus.OK);
             }
         }
-        return null;
+        return new ResponseEntity<>("Login Failed!", HttpStatus.EXPECTATION_FAILED);
     }
-
 
 }

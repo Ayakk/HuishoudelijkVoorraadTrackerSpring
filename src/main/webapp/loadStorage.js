@@ -24,7 +24,7 @@ function shoppingListFunc(){
             var text = "";
             let contacts = new Map()
             for (x in data) {
-                text = "ID: " + data[x]['id'] + "NAAM: " + data[x]['name']
+                text = "Hoeveel producten wilt u minimaal hebben voor: \n ID: " + data[x]['id'] + ", NAAM: " + data[x]['name']
                 var input = prompt(text);
                 if (input != null && input != "") {
                     var berekening = input - data[x]['quantity']
@@ -34,10 +34,13 @@ function shoppingListFunc(){
             var text3= "";
 
             for (const entry of contacts.entries()) {
+                console.log(entry[1])
                 if(entry[1] < 0){
-                    text3 += "Product: " + entry[0]+ " " + "Hoeveelheid: 0, u heeft genoeg van dit product \n"
+                    text3 += "Product: " + entry[0]+ " " + ", Hoeveelheid: 0, u heeft genoeg van dit product \n"
+                } else if(entry[1] >= 0){
+                    text3 += "Product: " + entry[0]+ " " + ", Hoeveelheid: "+ entry[1] +" \n"
                 } else{
-                    text3 += "Product: " + entry[0]+ " " + "Hoeveelheid: "+ entry[1] +" \n"
+                    text3 += "Product: " + entry[0]+ " " + ", U heeft niks ingevuld voor dit product! \n"
                 }
             }
             alert(text3)

@@ -6,6 +6,8 @@ import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.InventoryRepo
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.ItemRepo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.FormParam;
@@ -32,7 +34,7 @@ public class htmlAddItemController {
     }
 
     @PostMapping("/postItem")
-    public String createItem(@RequestBody Item item ) {
+    ResponseEntity<String> createItem(@RequestBody Item item ) {
         itemRepo.save(item);
 
         for(Inventory inventory : inventoryRepo.findAll()){
@@ -47,6 +49,6 @@ public class htmlAddItemController {
                 }
             }
         }
-        return "register_success";
+        return new ResponseEntity<>("Item added!", HttpStatus.OK);
     }
 }

@@ -6,6 +6,8 @@ import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.AccountRepo;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.InventoryRepo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.FormParam;
@@ -20,7 +22,7 @@ public class htmlRegisterController {
     InventoryRepo inventoryRepo;
 
     @PostMapping()
-    public String createAccount(@FormParam("username") String username, @FormParam("password") String password){
+    ResponseEntity<String> createAccount(@FormParam("username") String username, @FormParam("password") String password){
         Account a = new Account();
         a.setUsername(username);
         a.setPassword(password);
@@ -35,6 +37,6 @@ public class htmlRegisterController {
             }
         }
 
-        return "<script>window.location=\"index.html\"</script>";
+        return new ResponseEntity<>("<script>window.location=\"index.html\"</script>", HttpStatus.OK);
     }
 }
