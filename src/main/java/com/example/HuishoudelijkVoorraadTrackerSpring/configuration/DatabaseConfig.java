@@ -6,15 +6,29 @@ import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Item;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.AccountRepo;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.InventoryRepo;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.ItemRepo;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import lombok.Value;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.sql.DataSource;
+
 @Configuration
 @Log4j2
 public class DatabaseConfig
 {
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
+    @Bean
+    public DataSource dataSource() {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(dbUrl);
+        return new HikariDataSource(config);
+    }
+
     @Bean
     CommandLineRunner initDatabase(AccountRepo accountRepo, InventoryRepo inventoryRepo, ItemRepo itemRepo){
         return args -> {
