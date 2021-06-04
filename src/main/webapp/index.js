@@ -2,6 +2,21 @@ function goToRegisterPage(){
     window.location = "register.html"
 }
 
+getAllItems()
+function getAllItems(){
+    fetch('createItem/getAllItems', {
+        method: 'GET', // or 'PUT'
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => response.json())
+        .then(function(data) {
+            console.log(data)
+        })
+}
+
 function loginSubmit() {
     console.log("loginsubmit() FUNCTION CALL")
     var usernameVal= document.getElementById('username').value
