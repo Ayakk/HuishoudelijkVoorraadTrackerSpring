@@ -4,6 +4,10 @@ import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Account;
 import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Inventory;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.AccountRepo;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.InventoryRepo;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.crypto.MacProvider;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +17,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.Produces;
+import java.security.Key;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
 @Log4j2
 @RequestMapping("/loginHTML")
 public class HtmlLoginController {
+    public static final Key key = MacProvider.generateKey();
     @Autowired
     AccountRepo accountRepo;
     @Autowired
@@ -27,11 +34,9 @@ public class HtmlLoginController {
     @PostMapping()
     @Produces(MediaType.TEXT_HTML_VALUE)
     ResponseEntity<String> processRegister(@FormParam("username") String username, @FormParam("password") String password) {
-        System.out.println("LOGIN USERNAME: "+username);
-        System.out.println("LOGIN PASSWORD: "+password);
-
         Long id= Long.valueOf(0);
         String inventoryProductsfromDB = "";
+        String token = "";
 
         for(Account dbAccounts : accountRepo.findAll()){
             if (username.equals(dbAccounts.getUsername())){
@@ -46,24 +51,47 @@ public class HtmlLoginController {
             }
         }
 
-        System.out.println("ACCOUNT ID: " + id);
-        List<Account> allAccounts = accountRepo.findAll();
-        for (Account a : allAccounts) {
-            System.out.println("");
-            System.out.println("LOOP USERNAME: " + a.getUsername() + " COMPARED TO: " + username);
-            System.out.println("LOOP PASSWORD: " + a.getPassword() + " COMPARED TO: "  + password);
-            if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
-                System.out.println("SUCCESVOL AFGEROND INLOGGEN");
+        try {
+            String role = null;
+            for (Account u : accountRepo.findAll()) {
+                if (u.getUsername().equals(username) && u.checkPassword(password)) {
+                    role = u.getRole();
 
-                String s = "<script>window.location = \"/viewStorage.html\"\n" +
-                        "sessionStorage.setItem(\"userID\", "+ id +")\n"+
-                        "sessionStorage.setItem(\"products\", \""+ inventoryProductsfromDB +"\")\n"+
-                        "</script>";
-
-                return new ResponseEntity<>(s, HttpStatus.OK);
+                }
             }
+            if (role == null) throw new IllegalArgumentException("No user found!");
+
+            token = createtoken(username, role);
+            List<Account> allAccounts = accountRepo.findAll();
+            for (Account a : allAccounts) {
+                if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
+                    System.out.println("TOKEEEEEEEN" + token);
+                    String s = "<script>window.location = \"/viewStorage.html\"\n" +
+                            "sessionStorage.setItem(\"userID\", " + id + ")\n" +
+                            "sessionStorage.setItem(\"products\", \"" + inventoryProductsfromDB + "\")\n" +
+                            "sessionStorage.setItem(\"myJWT\", \"" + token + "\")\n" +
+                            "</script>";
+
+                    return new ResponseEntity<>(s, HttpStatus.OK);
+                }
+            }
+        } catch (JwtException | IllegalArgumentException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Login Failed!", HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>("Login Failed!", HttpStatus.EXPECTATION_FAILED);
+        return new ResponseEntity<>("Request handled", HttpStatus.OK);
+    }
+
+    private String createtoken(String username, String role) throws JwtException{
+        Calendar expiration = Calendar.getInstance();
+        expiration.add(Calendar.MINUTE, 30);
+
+        return Jwts.builder()
+                .setSubject(username)
+                .setExpiration(expiration.getTime())
+                .claim("role", role)
+                .signWith(SignatureAlgorithm.HS512, key)
+                .compact();
     }
 
 }
