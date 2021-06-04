@@ -55,7 +55,7 @@ public class HtmlLoginController {
             if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                 System.out.println("SUCCESVOL AFGEROND INLOGGEN");
 
-                String s = "<script>window.location = \"http://localhost:8080/viewStorage.html\"\n" +
+                String s = "<script>window.location = \"/viewStorage.html\"\n" +
                         "sessionStorage.setItem(\"userID\", "+ id +")\n"+
                         "sessionStorage.setItem(\"products\", \""+ inventoryProductsfromDB +"\")\n"+
                         "</script>";
