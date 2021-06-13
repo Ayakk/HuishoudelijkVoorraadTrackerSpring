@@ -153,9 +153,8 @@ function getItems(id, products){
                 text +="<label aria-label=\"Name\">NAAM:            </label>"+data[x]['name'] + "<br>"
                 text +="<label aria-label=\"Description\">OMSCHRIJVING:    </label>"+data[x]['description'] + "<br>"
                 text +="<label aria-label=\"Price\">PRIJS:           </label>"+data[x]['price'] + "<br>"
-                text +="<label aria-label=\"Amount\" for=\'INPUT"+data[x]['id']+ "\'>HOEVEELHEID:     </label><input aria-label=\"Input amount\" id=\"INPUT"+data[x]['id'] +"\" placeholder="+ data[x]['quantity'] +" type=\"number\">"
-                text +="<button aria-label=\"Save button\" id=\"saveButton" + data[x]['id'] +"\" onClick=saveButtonFunc(this.id) id=BUTTON>Opslaan</button>"
-                text +="<button aria-label=\"Delete Button\" id=\"deleteButton" + data[x]['id'] +"\" onClick=deleteButtonFunc(this.id) id=BUTTON>Product Verwijderen</button>"
+                text +="<label aria-label=\"Amount\" for=\'INPUT"+data[x]['id']+ "\'>HOEVEELHEID:" +  data[x]['quantity'] +"   </label> <br>"
+                text +="<input aria-label=\"Input amount\" id=\"INPUT"+data[x]['id'] +"\" placeholder=\"Hoeveel wilt u hebben?\" type=\"number\">"
                 text +="<br>"
                 text +="</div>"
                 text +="<br>"
@@ -227,4 +226,69 @@ function deleteButtonFunc(id){
 
     var el = document.getElementById('itemDiv' + id);
     el.remove(); // Removes the div with the 'div-02' id
+}
+
+
+var emailText = "";
+function generateList(){
+    fetch('/htmlStorage/getItemData', {
+        method: 'GET', // or 'PUT'
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + window.sessionStorage.getItem("myJWT")
+        },
+    })
+        .then(response => response.json())
+        .then(function(data){
+            console.log(data)
+            var text = "";
+            let contacts = new Map()
+            for (x in data){
+                console.log()
+                var input= document.getElementById('INPUT'+data[x]['id']).value
+                if (input != null && input != "") {
+                    var berekening = input - data[x]['quantity']
+                    contacts.set(data[x]['name'], berekening)
+                }
+            }
+            var text3= "";
+            text3 += "<h1>Boodschappenlijst: </h1>"
+            for (const entry of contacts.entries()) {
+                console.log(entry[1])
+                if(entry[1] < 0){
+                    text3 += "Product: " + entry[0]+ " " + ", Hoeveelheid: 0, u heeft genoeg van dit product <br>"
+                    emailText += "Product: " + entry[0]+ " " + ", Hoeveelheid: 0, u heeft genoeg van dit product \n"
+                } else if(entry[1] >= 0){
+                    text3 += "Product: " + entry[0]+ " " + ", Hoeveelheid: "+ entry[1] +" <br>"
+                    emailText += "Product: " + entry[0]+ " " + ", Hoeveelheid: "+ entry[1] +" \n"
+                } else{
+                    text3 += "Product: " + entry[0]+ " " + ", U heeft niks ingevuld voor dit product! <br>"
+                    emailText += "Product: " + entry[0]+ " " + ", Hoeveelheid: "+ entry[1] +" \n"
+                }
+            }
+            text3 += "<h3>Voer uw email in als u dit lijstje naar u verzonden wilt krijgen: </h3>"
+
+            document.getElementById('shoppinglistInputEmail').style.display = "block";
+            document.getElementById('sendEmailButton').style.display = "block";
+
+            document.getElementById('shoppinglist').innerHTML = text3
+
+        })
+}
+
+function sendEmail() {
+    let email = document.getElementById('shoppinglistInputEmail').value
+    Email.send({
+        Host: "smtp.gmail.com",
+        Username: "hvt.ipass@gmail.com",
+        Password: "hvtipass2021",
+        To: email,
+        From: "hvt.ipass@gmail.com",
+        Subject: "Boodschappenlijstje",
+        Body: emailText,
+    })
+        .then(function (message) {
+            alert("mail sent successfully")
+        });
 }

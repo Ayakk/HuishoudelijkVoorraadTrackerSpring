@@ -1,6 +1,7 @@
 package com.example.HuishoudelijkVoorraadTrackerSpring.configuration;
 
 import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Account;
+import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Inventory;
 import com.example.HuishoudelijkVoorraadTrackerSpring.entities.Item;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.AccountRepo;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.InventoryRepo;
@@ -8,25 +9,29 @@ import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.ItemRepo;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
 @Configuration
 @Log4j2
-public class DatabaseConfig
-{
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
-    @Bean
-    public DataSource dataSource() {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(dbUrl);
-        return new HikariDataSource(config);
-    }
+public class DatabaseConfig {
+    @Autowired
+    PasswordEncoder encoder;
+
+//    @Value("${spring.datasource.url}")
+//    private String dbUrl;
+//    @Bean
+//    public DataSource dataSource() {
+//        HikariConfig config = new HikariConfig();
+//        config.setJdbcUrl(dbUrl);
+//        return new HikariDataSource(config);
+//    }
 
     @Bean
     CommandLineRunner initDatabase(AccountRepo accountRepo, InventoryRepo inventoryRepo, ItemRepo itemRepo){
@@ -38,10 +43,13 @@ public class DatabaseConfig
                 System.out.println("speler bestaat niet,de speler wordt aangemaakt");
                 Account newAccount = new Account();
                 newAccount.setUsername("username1");
-                newAccount.setPassword("pwd");
-                newAccount.setRole("admin");
-
+                newAccount.setPassword(encoder.encode("pwd"));
                 accountRepo.save(newAccount);
+
+                Inventory i = new Inventory();
+                i.setId(accountRepo.findByUsername("username1").get().getId());
+                i.setProducts("0,0;");
+                inventoryRepo.save(i);
             }
 
 

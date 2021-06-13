@@ -7,15 +7,18 @@ import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.InventoryRepo
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.ItemRepo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @Log4j2
 @RequestMapping("/htmlStorage")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class htmlViewStorageController {
     @Autowired
     AccountRepo accountRepo;
@@ -81,7 +84,7 @@ public class htmlViewStorageController {
     }
 
     @GetMapping("/getInventory")
-    public Map<Integer, String> getInventoryProducts(){
+    public Map<Integer, String> getInventory(){
         mapForJS.clear();
         for(Inventory i : inventoryRepo.findAll()){
             mapForJS.put(Math.toIntExact(i.getId()), i.getProducts());
@@ -90,12 +93,17 @@ public class htmlViewStorageController {
     }
 
     @GetMapping("/getItemData")
-    public Map<Integer, Item> getData(){
+    public Map<Integer, Item> getItemData(){
+        try{
+            System.out.println("MAP1 : " + mapForJS2.get(31).getQuantity() + " " + mapForJS2.get(32).getQuantity());
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return mapForJS2;
     }
 
     @PostMapping("/giveInventoryData")
-    public Map<Integer, Item> getItemData(@RequestBody Inventory inventory){
+    public Map<Integer, Item> giveInventoryData(@RequestBody Inventory inventory){
         System.out.println("FUNCTION getItemData IN htmlViewStorageController.java; INVENTORY ID : " + inventory.getId());
         System.out.println("FUNCTION getItemData AMOUNT IN htmlViewStorageController.java; INVENTORY PRODUCTS : " + inventory.getProducts());
 
@@ -116,6 +124,11 @@ public class htmlViewStorageController {
             }else{
                 System.out.println("ANSWER FALSE");
             }
+        }
+        try{
+            System.out.println("MAP2 : " + mapForJS2.get(31).getQuantity() + " " + mapForJS2.get(32).getQuantity());
+        }catch (Exception e){
+            System.out.println(e);
         }
         return mapForJS2;
     }

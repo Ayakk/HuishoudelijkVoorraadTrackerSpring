@@ -8,8 +8,10 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.FormParam;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +19,7 @@ import java.util.Map;
 @RestController
 @Log4j2
 @RequestMapping("/createItem")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class htmlAddItemController {
     @Autowired
     ItemRepo itemRepo;

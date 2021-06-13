@@ -18,6 +18,7 @@ function postExistingItem(){
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + window.sessionStorage.getItem("myJWT")
         },
         body: JSON.stringify(item),
     })
@@ -31,6 +32,7 @@ function getAllItems(){
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + window.sessionStorage.getItem("myJWT")
         },
     })
         .then(response => response.json())
@@ -64,6 +66,7 @@ function postItem(){
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + window.sessionStorage.getItem("myJWT")
         },
         body: JSON.stringify(item),
     })

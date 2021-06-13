@@ -5,8 +5,9 @@
     <title>Register Page</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="register.js"></script>
 </head>
 <body>
 <div class="sidenav">
@@ -18,15 +19,16 @@
 <div class="main">
     <div class="col-md-6 col-sm-12">
         <div class="login-form">
-            <form action="registerHTML" aria-label="Registerform" id="registerForm" method="post">
+            <form aria-label="Registerform" id="registerForm">
                 <div class="form-group">
                     <label aria-label="Username" for="username">username:</label><br>
                     <input aria-label="Input for username" id="username" name="username" placeholder="username1" type="text"><br>
                     <label aria-label="Password" for="password">password:</label><br>
                     <input aria-label="Input for password" id="password" name="password" placeholder="pwd" type="password">
-                    <input aria-label="Submit button" id="submitButton" type="submit" value="Submit">
                 </div>
             </form>
+            <button aria-label="Go back to loginpage button" onclick="window.location = 'index.html';" id="submitButton" class="btn btn-black">Ga terug</button>
+            <button aria-label="Register new account button" onclick="registerFunc()" id="registerButton" class="btn btn-secondary">Register</button>
         </div>
     </div>
 </div>

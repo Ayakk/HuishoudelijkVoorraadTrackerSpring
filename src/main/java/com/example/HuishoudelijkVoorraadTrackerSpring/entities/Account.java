@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -28,9 +27,11 @@ public class Account implements IAccount {
     @Getter @Setter
     @Column(name="password")
     private String password;
-    @Getter @Setter
-    @Column(name="role")
-    private String role;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     public com.example.HuishoudelijkVoorraadTrackerSpring.domain.Account convertToDomain(){
         ModelMapper modelMapper = new ModelMapper();
@@ -45,6 +46,10 @@ public class Account implements IAccount {
         return username.equals(account.username);
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     public boolean checkPassword(String password){
         return this.password.equals(password);
     }
@@ -52,5 +57,9 @@ public class Account implements IAccount {
     @Override
     public int hashCode() {
         return Objects.hash(username);
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

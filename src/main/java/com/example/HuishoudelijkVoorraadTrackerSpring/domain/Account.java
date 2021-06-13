@@ -11,6 +11,4 @@ public class Account implements IAccount{
     private String username;
     @Getter @Setter
     private String password;
-    @Getter @Setter
-    private String role;
 }
