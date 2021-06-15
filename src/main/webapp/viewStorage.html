@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>View Storage</title>
     <script src="loadStorage.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="storage.css">
 </head>
 <body>
@@ -11,10 +12,10 @@
 <div class="allItemsDiv" aria-label="Item list" id="itemName">
 </div>
 <div class="navButtons">
-    <button aria-label="Log out button" id="logOutButton" onClick="logOutFunc()">Log uit</button><br>
-    <button aria-label="Add item button" id="addItemButton" onclick="window.location = 'createItem.html';">Voeg Item Toe</button><br>
+    <button aria-label="Log out button" class="btn btn-outline-danger" id="logOutButton" onClick="logOutFunc()">Log uit</button><br>
+    <button aria-label="Add item button" class="btn btn-outline-secondary" id="addItemButton" onclick="window.location = 'createItem.html';">Voeg Item Toe</button><br>
 <!--    <button aria-label="Shopping list button" id="shoppingListButton" onClick="shoppingListFunc()">Boodschappen Lijstje</button><br>-->
-    <button aria-label="Shopping list button" id="shoppingListButton" onclick="window.location = 'shoppinglist.html';">Boodschappen Lijstje</button><br>
+    <button aria-label="Shopping list button" class="btn btn-outline-secondary" id="shoppingListButton" onclick="window.location = 'shoppinglist.html';">Boodschappen Lijstje</button><br>
 </div>
 </body>
 </html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Create Item</title>
     <script src="createItem.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link href="createItem.css" rel="stylesheet">
 </head>
 <body>
@@ -18,7 +19,7 @@
 
         <label aria-label="Price" for="price"></label>
         <input aria-label="Input for price" id="price" name="price" placeholder="Product prijs" type="number"> <br>
-        <input aria-label="Submit button for create item form" id="submitButton" onclick="postItem()" type="submit"
+        <input aria-label="Submit button for create item form" class="btn btn-primary" id="submitButton" onclick="postItem()" type="submit"
                value="Submit">
     </form>
 
@@ -26,7 +27,7 @@
         <h1>Voeg bestaande product toe met ID</h1>
         <label aria-label="ID" for="productid"></label>
         <input aria-label="Input for id" id="productid" name="productid" placeholder="Product ID" type="text"><br>
-        <input aria-label="Submit button for create item form" onclick="postExistingItem()" id="addExistingItemFormSubmitButton" type="submit" value="Submit">
+        <input aria-label="Submit button for create item form" class="btn btn-primary" onclick="postExistingItem()" id="addExistingItemFormSubmitButton" type="submit" value="Submit">
     </form>
 
     <h1>All items</h1>
@@ -34,7 +35,7 @@
     </div>
 </div>
 <div class="navButtons">
-    <button aria-label="Go back to inventory page button" id="createItemReturnButton" name="createItemReturnButton"
+    <button aria-label="Go back to inventory page button" class="btn btn-outline-secondary" id="createItemReturnButton" name="createItemReturnButton"
             onclick="goToStoragePage()">Voorraad
     </button>
 </div>

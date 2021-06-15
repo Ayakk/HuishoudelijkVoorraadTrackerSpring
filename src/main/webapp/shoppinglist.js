@@ -155,9 +155,8 @@ function getItems(id, products){
                 text +="<label aria-label=\"Price\">PRIJS:           </label>"+data[x]['price'] + "<br>"
                 text +="<label aria-label=\"Amount\" for=\'INPUT"+data[x]['id']+ "\'>HOEVEELHEID:" +  data[x]['quantity'] +"   </label> <br>"
                 text +="<input aria-label=\"Input amount\" id=\"INPUT"+data[x]['id'] +"\" placeholder=\"Hoeveel wilt u hebben?\" type=\"number\">"
-                text +="<br>"
-                text +="</div>"
-                text +="<br>"
+                text += "<br>"
+                text += "</div>"
             }
             document.getElementById('itemName').innerHTML = text
             if(!window.location.hash) {
@@ -269,8 +268,11 @@ function generateList(){
             }
             text3 += "<h3>Voer uw email in als u dit lijstje naar u verzonden wilt krijgen: </h3>"
 
-            document.getElementById('shoppinglistInputEmail').style.display = "block";
-            document.getElementById('sendEmailButton').style.display = "block";
+            text3 += "            <input aria-label=\"Input email\" id=\"shoppinglistInputEmail\" placeholder=\"Voer uw email in\" type=\"text\"> <br>\n" +
+                "            <button id=\"sendEmailButton\" class=\"btn btn-outline-primary\" onclick='sendEmail()'>Verstuur</button>\n"
+
+            // document.getElementById('shoppinglistInputEmail').style.display = "block";
+            // document.getElementById('sendEmailButton').style.display = "block";
 
             document.getElementById('shoppinglist').innerHTML = text3
 

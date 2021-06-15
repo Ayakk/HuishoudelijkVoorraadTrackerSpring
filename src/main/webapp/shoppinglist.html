@@ -5,6 +5,7 @@
     <title>View Storage</title>
     <script src="https://smtpjs.com/v3/smtp.js"></script>
     <script src="shoppinglist.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="storage.css">
 </head>
 <body>
@@ -13,14 +14,14 @@
     <div class="communistDivs">
         <div class="allItemsDiv" aria-label="Item list" id="itemName"></div>
         <div class="shoppinglist" aria-label="Shopping list" id="shoppinglist"></div>
-        <div class="emaillist" id="emailDiv">
-            <input hidden aria-label="Input email" id="shoppinglistInputEmail" placeholder="Voer uw email in" type="text"> <br>
-            <button hidden id="sendEmailButton" onclick='sendEmail()'>Verstuur</button>
-        </div>
+<!--        <div class="emaillist" id="emailDiv">-->
+<!--            <input hidden aria-label="Input email" id="shoppinglistInputEmail" placeholder="Voer uw email in" type="text"> <br>-->
+<!--            <button hidden id="sendEmailButton" onclick='sendEmail()'>Verstuur</button>-->
+<!--        </div>-->
     </div>
     <div class="navButtons">
-        <button aria-label="Go back button" id="goBackButton" onclick="window.location = 'viewStorage.html';">Ga terug</button>
-        <button aria-label="Generate button" id="generateButton" onClick="generateList()">Genereer boodschappenlijst</button>
+        <button aria-label="Go back button" class="btn btn-outline-secondary" id="goBackButton" onclick="window.location = 'viewStorage.html';">Ga terug</button>
+        <button aria-label="Generate button" class="btn btn-outline-primary" id="generateButton" onClick="generateList()">Genereer boodschappenlijst</button>
         <!--    <button aria-label="Shopping list button" id="shoppingListButton" onClick="shoppingListFunc()">Boodschappen Lijstje</button><br>-->
     </div>
 </div>

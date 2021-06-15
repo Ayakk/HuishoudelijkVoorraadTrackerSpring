@@ -15,9 +15,7 @@
     grid-template-columns: repeat(2, minmax(150px, 1fr));
     float:left;
 }
-.shoppinglist{
-    float: left;
-}
+
 .emaillist{
 }
 .alldivs{
