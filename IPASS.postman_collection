@@ -1,0 +1,305 @@
+{
+	"info": {
+		"_postman_id": "3123fa4f-eee4-4655-8262-e5654269ca0a",
+		"name": "IPASS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "signin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//tests voor juiste inlog gegevens:\r",
+							"pm.test(\"Juiste login info status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body test\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"});\r",
+							"pm.test(\"JSON test\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"ROLE test\", function () {\r",
+							"    pm.test(\"Body matches string\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"ROLE_ADMIN\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"//test voor onjuiste inloggegevens:\r",
+							"pm.test(\"Onjuiste login info status test\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"username1\",\r\n    \"password\": \"pwd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getallItemsWithAuth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//juiste auth tests: \r",
+							"pm.test(\"Juiste auth Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body test\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"});\r",
+							"pm.test(\"JSON test\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Test inhoud response\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"TestItem\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"Beschrijving\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//onjuiste auth tests:\r",
+							"pm.test(\"Onjuiste auth Status test\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VybmFtZTEiLCJpYXQiOjE2MjM4Nzg2NTMsImV4cCI6MTYyMzk2NTA1M30.HvyXoVPuPPBxJT5nYQpPzum_zfIKtCozHEQ8HBBKn9F2OchduuiEJxJiOD8EXxrUCJsQFawZQc-IFN90icS8oA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/createItem/getAllItems",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"createItem",
+						"getAllItems"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body test\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"});\r",
+							"pm.test(\"JSON test\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Test inhoud response\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"username1\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"$2y$12$Oab8wkHMsFKaPXxNpIUAGOvJXahYiVyof8ihybPwApE3H98Q7Q8ki\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"ROLE_ADMIN\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/test/getAllAccount",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"getAllAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllInventory",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body test\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"});\r",
+							"pm.test(\"JSON test\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Test inhoud response\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"0,0\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/test/getAllInventory",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"getAllInventory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllItem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body test\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"});\r",
+							"pm.test(\"JSON test\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Test inhoud response\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"TestItem\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"Beschrijving\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/test/getAllItem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"getAllItem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllRole",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body test\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"});\r",
+							"pm.test(\"JSON test\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Test inhoud response\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"ROLE_ADMIN\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"ROLE_USER\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/test/getAllRole",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"getAllRole"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
