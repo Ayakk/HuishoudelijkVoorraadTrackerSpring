@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootTest
 class HuishoudelijkVoorraadTrackerSpringApplicationTests {
 	@Autowired
@@ -37,10 +40,37 @@ class HuishoudelijkVoorraadTrackerSpringApplicationTests {
 	}
 
 	@Test
-	public void checkInventoryRepo(){
-		for(Inventory i : inventoryRepo.findAll()){
-			int z = Math.toIntExact(i.getId());
-			assertEquals(z, 2);
+	public void checkIfInventoryExists(){
+		for(Inventory inventory : inventoryRepo.findAll()){
+			int z = Math.toIntExact(inventory.getId());
+			assertNotNull(z);
+		}
+	}
+
+	@Test
+	public void checkIfAccountExists(){
+		for(Account account : accountRepo.findAll()){
+			int z = Math.toIntExact(account.getId());
+			assertNotNull(z);
+		}
+	}
+
+	@Test
+	public void checkIfItemExists(){
+		for(Item item : itemRepo.findAll()){
+			int z = Math.toIntExact(item.getId());
+			assertNotNull(z);
+		}
+	}
+
+	@Test
+	public void	checkIfAccountsHasInventory(){
+		List<Long> accountIds = new ArrayList<>();
+		for (Account account : accountRepo.findAll()){
+			accountIds.add(account.getId());
+		}
+		for (Inventory inventory : inventoryRepo.findAll()){
+			assertTrue(accountIds.contains(inventory.getId()));
 		}
 	}
 }
