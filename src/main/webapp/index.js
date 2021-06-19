@@ -2,14 +2,16 @@ function login() {
     const usernameVal = document.getElementById('username').value
     const passwordVal = document.getElementById('password').value
 
-    const user = {
-        username: usernameVal,
-        password: passwordVal
-    }
+    if (!usernameVal || !passwordVal) {
+        alert("Vul de velden in!")
+    } else {
+        const user = {
+            username: usernameVal,
+            password: passwordVal
+        }
 
-    console.log(JSON.stringify(user))
+        console.log(JSON.stringify(user))
 
-    if(usernameVal && passwordVal){
         fetch('/auth/signin', {
             method: 'POST', // or 'PUT'
             headers: {
@@ -19,9 +21,9 @@ function login() {
             body: JSON.stringify(user),
         })
             .then(response => response.json())
-            .then(function(data){
+            .then(function (data) {
                 console.log(data.status)
-                if(data.status == undefined){
+                if (data.status == undefined) {
                     sessionStorage.setItem('myJWT', data['accessToken'])
                     sessionStorage.setItem('products', data['products'])
                     sessionStorage.setItem('userID', data['id'])

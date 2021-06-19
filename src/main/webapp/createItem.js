@@ -9,21 +9,26 @@ function goToStoragePage(){
 function postExistingItem(){
     var id = sessionStorage.getItem('userID')
     var itemID = document.getElementById('productid').value
-    const item = {
-        inventoryid: id,
-        id: itemID
-    }
-    fetch('/createItem', {
-        method: 'POST', // or 'PUT'
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + window.sessionStorage.getItem("myJWT")
-        },
-        body: JSON.stringify(item),
-    })
 
-    window.location = "viewStorage.html"
+    if (!itemID) {
+        alert("Vul de velden in!")
+    }else{
+        const item = {
+            inventoryid: id,
+            id: itemID
+        }
+        fetch('/createItem', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem("myJWT")
+            },
+            body: JSON.stringify(item),
+        })
+
+        window.location = "viewStorage.html"
+    }
 }
 
 function getAllItems(){
@@ -50,26 +55,30 @@ function getAllItems(){
 }
 
 function postItem(){
-    var id = sessionStorage.getItem('userID')
-    var name= document.getElementById('name').value
-    var description= document.getElementById('description').value
-    var price= document.getElementById('price').value
+    const id = sessionStorage.getItem('userID')
+    const name= document.getElementById('name').value
+    const description= document.getElementById('description').value
+    const price= document.getElementById('price').value
 
-    const item = {
-        id: id,
-        name: name,
-        description: description,
-        price: price
+    if (!name || !description || !price) {
+        alert("Vul de velden in!")
+    } else{
+        const item = {
+            id: id,
+            name: name,
+            description: description,
+            price: price
+        }
+        fetch('/createItem/postItem', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem("myJWT")
+            },
+            body: JSON.stringify(item),
+        })
+
+        window.location = "viewStorage.html"
     }
-    fetch('/createItem/postItem', {
-        method: 'POST', // or 'PUT'
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + window.sessionStorage.getItem("myJWT")
-        },
-        body: JSON.stringify(item),
-    })
-
-    window.location = "viewStorage.html"
 }
