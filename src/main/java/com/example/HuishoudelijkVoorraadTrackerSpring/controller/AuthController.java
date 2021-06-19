@@ -138,6 +138,17 @@ public class AuthController {
         return "Succesvol uitgelogd!";
     }
 
+    @PostMapping("/changepwd")
+    public ResponseEntity<?> changePassword(@Valid @RequestBody signupRequest signUpRequest) {
+        for (Account account : accountRepo.findAll()){
+            if (account.getUsername().equals(signUpRequest.getUsername())){
+                account.setPassword(encoder.encode(signUpRequest.getPassword()));
+                accountRepo.save(account);
+            }
+        }
+        return ResponseEntity.ok(new messageResponse("Password changed succesfully!"));
+    }
+
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody signupRequest signUpRequest) {
         String username = signUpRequest.getUsername();
