@@ -19,8 +19,8 @@ import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.RoleRepo;
 import com.example.HuishoudelijkVoorraadTrackerSpring.security.jwt.JwtUtils;
 import com.example.HuishoudelijkVoorraadTrackerSpring.security.services.UserDetailsImpl;
 import com.sun.el.stream.Stream;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,7 +30,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-
+@Log4j2
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/auth")
@@ -74,9 +74,7 @@ public class AuthController {
             }
         }
 
-        System.out.println(inventoryProductsfromDB);
-
-
+        log.info("Inventory products form db: {}", inventoryProductsfromDB);
         return ResponseEntity.ok(new jwtResponse(
                 jwt,
                 userDetails.getId(),
@@ -87,7 +85,7 @@ public class AuthController {
 
     }
     @PostMapping("/signout")
-    public String logoutUser() {
+    public ResponseEntity<messageResponse> logoutUser() {
         Stream strRoles = null;
         antlr.collections.List roles = new antlr.collections.List() {
             @Override
@@ -135,7 +133,8 @@ public class AuthController {
                 roles.add(userRole);
             }
         }
-        return "Succesvol uitgelogd!";
+        return ResponseEntity.ok(new messageResponse("User logged out successfully!"));
+//        return "Succesvol uitgelogd!";
     }
 
     @PostMapping("/changepwd")
@@ -154,7 +153,7 @@ public class AuthController {
         String username = signUpRequest.getUsername();
         String password = String.valueOf(signUpRequest.getPassword());
 
-        System.out.println(username + " " + password);
+        log.info("username: {}, password: {}", username, password);
 
 
         if (accountRepo.existsByUsername(signUpRequest.getUsername())) {

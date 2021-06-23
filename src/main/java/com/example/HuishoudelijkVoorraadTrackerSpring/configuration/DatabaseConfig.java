@@ -24,6 +24,7 @@ public class DatabaseConfig {
     @Autowired
     PasswordEncoder encoder;
 
+    // uncomment the code below if you're using a local database instead of heroku
 //    @Value("${spring.datasource.url}")
 //    private String dbUrl;
 //    @Bean
@@ -33,6 +34,7 @@ public class DatabaseConfig {
 //        return new HikariDataSource(config);
 //    }
 
+    //creating data for the database
     @Bean
     CommandLineRunner initDatabase(AccountRepo accountRepo, InventoryRepo inventoryRepo, ItemRepo itemRepo){
         return args -> {

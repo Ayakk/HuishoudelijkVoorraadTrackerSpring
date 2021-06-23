@@ -7,13 +7,14 @@ import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.InventoryRepo
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.ItemRepo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @Log4j2
@@ -32,34 +33,28 @@ public class htmlViewStorageController {
     Map<Integer, Item> mapForJS2 = new HashMap<Integer, Item>();
 
     @PostMapping("/deleteItem")
-    public String deleteItem(@RequestBody Item item){
+    public ResponseEntity<String> deleteItem(@RequestBody Item item){
         mapForBackend.clear();
         mapForJS.clear();
         mapForJS2.clear();
 
-        System.out.println("Function deleteItem");
+        log.info("function deleteItem");
         for(Inventory i : inventoryRepo.findAll()){
-            System.out.println("LOOP");
             int z = Math.toIntExact(i.getId());
             if(z == item.getInventoryid()){
-                System.out.println("IF");
                 String s = i.getProducts();
                 String toReplace = item.getId() + "," + item.getQuantity() + ";";
-                System.out.println(s + " + " + toReplace);
                 String newString = s.replace(toReplace, "");
-                System.out.println("S REPLACED " + newString);
                 i.setProducts(newString);
                 inventoryRepo.save(i);
             }
         }
-        return "";
+        return new ResponseEntity<>("Item deleted", HttpStatus.OK);
     }
 
     @PostMapping("/giveID")
-    public String getID(@RequestBody Inventory inventory){
+    public ResponseEntity<String> getID(@RequestBody Inventory inventory){
         mapForBackend.clear();
-
-        System.out.println("getID inventoryID: " + inventory.getId());
 
         for (Inventory i : inventoryRepo.findAll()){
             if(i.getId() == inventory.getId()){
@@ -71,16 +66,16 @@ public class htmlViewStorageController {
                 }
             }
         }
-        return "";
+        return new ResponseEntity<>("ID returned", HttpStatus.OK);
     }
 
     @PostMapping("/logout")
-    public String logOut(){
+    public ResponseEntity<String> logOut(){
         mapForBackend.clear();
         mapForJS.clear();
         mapForJS2.clear();
-        System.out.println("LOGOUT CHECK : \n" + mapForBackend + "\n" + mapForJS + "\n" + mapForJS2 + "\n");
-        return "";
+        log.info("LOGOUT CHECK: \n {} \n {} \n {}", mapForBackend, mapForJS, mapForJS2);
+        return new ResponseEntity<>("Logout successful", HttpStatus.OK);
     }
 
     @GetMapping("/getInventory")
@@ -95,18 +90,15 @@ public class htmlViewStorageController {
     @GetMapping("/getItemData")
     public Map<Integer, Item> getItemData(){
         try{
-            System.out.println("MAP1 : " + mapForJS2.get(31).getQuantity() + " " + mapForJS2.get(32).getQuantity());
+            log.info("MAP1: \n {} \n {}", mapForJS2.get(31).getQuantity(), mapForJS2.get(32).getQuantity());
         }catch (Exception e){
-            System.out.println(e);
+            log.info(e);
         }
         return mapForJS2;
     }
 
     @PostMapping("/giveInventoryData")
     public Map<Integer, Item> giveInventoryData(@RequestBody Inventory inventory){
-        System.out.println("FUNCTION getItemData IN htmlViewStorageController.java; INVENTORY ID : " + inventory.getId());
-        System.out.println("FUNCTION getItemData AMOUNT IN htmlViewStorageController.java; INVENTORY PRODUCTS : " + inventory.getProducts());
-
         String products = inventory.getProducts();
         String[] parts = products.split(";");
         for(String i : parts){
@@ -114,7 +106,7 @@ public class htmlViewStorageController {
             mapForBackend.put(Integer.parseInt(commaParts[0]), Integer.parseInt(commaParts[1]));
         }
 
-        System.out.println("FUNCTION getItemData IN htmlViewStorageController.java; mapForBackend HASHMAP CONTENTS: "+mapForBackend);
+        //checks what items belong to the user
         List<Item> allItemsFromRepoList = itemRepo.findAll();
         for (Item i : allItemsFromRepoList) {
             int z = Math.toIntExact(i.getId());
@@ -122,21 +114,21 @@ public class htmlViewStorageController {
                 i.setQuantity(mapForBackend.get(z));
                 mapForJS2.put(z, i);
             }else{
-                System.out.println("ANSWER FALSE");
+                log.info("ITEM DOESNT BELONG TO THIS USER");
             }
         }
         try{
-            System.out.println("MAP2 : " + mapForJS2.get(31).getQuantity() + " " + mapForJS2.get(32).getQuantity());
+            log.info("MAP2: \n {} \n {}", mapForJS2.get(31).getQuantity(), mapForJS2.get(32).getQuantity());
         }catch (Exception e){
-            System.out.println(e);
+            log.info(e);
         }
         return mapForJS2;
     }
 
     @PostMapping("/updateAmounts")
-    public String updateAmount(@RequestBody Item item){
+    public ResponseEntity<String> updateAmount(@RequestBody Item item){
         int z = Math.toIntExact(item.getId());
-        System.out.println("MAP BEFORE CONVERSION TO DB MODEL: " + mapForBackend);
+        log.info("\n Function updateAmount \n Map before conversion: {}", mapForBackend);
 
         mapForBackend.remove(z);
         mapForBackend.put(z, item.getQuantity());
@@ -148,9 +140,9 @@ public class htmlViewStorageController {
         s=s.replace("=", ",");
         s=s.replace(" ", "");
 
-        System.out.println("MAP AFTER CONVERSION TO DB MODEL: " + s);
+        log.info("\n Map after conversion: {}", s);
         Inventory inventory = new Inventory((long) item.getInventoryid(), s);
         inventoryRepo.save(inventory);
-        return "";
+        return new ResponseEntity<>("Amount updated successfully", HttpStatus.OK);
     }
 }

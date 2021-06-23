@@ -36,8 +36,8 @@ public class htmlAddItemController {
 
     @PostMapping()
     ResponseEntity<String> addExistingItem(@RequestBody Item item ){
-        System.out.println(item.getInventoryid());
-        System.out.println(item.getId());
+        log.info("item inventory id: {}", item.getInventoryid());
+        log.info("item id: {}", item.getId());
 
         Long inventoryIDtoLong = (long) item.getInventoryid();
         for(Inventory inventory : inventoryRepo.findAll()){

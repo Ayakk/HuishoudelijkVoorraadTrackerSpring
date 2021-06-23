@@ -10,7 +10,6 @@ import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.ItemRepo;
 import com.example.HuishoudelijkVoorraadTrackerSpring.repositories.RoleRepo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
